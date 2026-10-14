@@ -5,6 +5,8 @@ import kotlinx.coroutines.Dispatchers
 import org.stansamples.android.analytics.provider.Analytics
 import org.stansamples.android.analytics.provider.Contexts
 import org.stansamples.android.analytics.provider.FinalAnalytics
+import org.stansamples.android.analytics.provider.FinalLoggers
+import org.stansamples.android.analytics.provider.Loggers
 import org.stansamples.android.analytics.provider.Providers
 
 internal class App : Application() {
@@ -18,9 +20,11 @@ internal class App : Application() {
         val analytics: Analytics = FinalAnalytics(
             contexts = contexts,
         )
+        val loggers: Loggers = FinalLoggers()
         _providers = Providers(
             contexts = contexts,
             analytics = analytics,
+            loggers = loggers,
         )
     }
 
