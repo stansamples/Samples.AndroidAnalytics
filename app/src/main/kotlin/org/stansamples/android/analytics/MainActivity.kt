@@ -34,11 +34,7 @@ internal class MainActivity : ComponentActivity() {
                     lifecycleScope.launch {
                         withContext(App.providers.contexts.default) {
                             val now = System.currentTimeMillis()
-                            val event = Analytics.Event(
-                                date = now.milliseconds,
-                                message = "event: $now",
-                            )
-                            App.providers.analytics.save(event = event)
+                            App.providers.analytics.save(message = "now: $now")
                         }
                     }
                 }
