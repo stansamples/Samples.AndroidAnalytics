@@ -7,6 +7,11 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
 import androidx.activity.ComponentActivity
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import org.stansamples.android.analytics.provider.Analytics
+import kotlin.time.Duration.Companion.milliseconds
 
 internal class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,7 +31,16 @@ internal class MainActivity : ComponentActivity() {
                 )
                 view.text = "save event"
                 view.setOnClickListener { _ ->
-                    // todo
+                    lifecycleScope.launch {
+                        withContext(App.providers.contexts.default) {
+                            val now = System.currentTimeMillis()
+                            val event = Analytics.Event(
+                                date = now.milliseconds,
+                                message = "event: $now",
+                            )
+                            App.providers.analytics.save(event = event)
+                        }
+                    }
                 }
                 root.addView(view)
             }
